@@ -1,55 +1,104 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require('webpack'); //访问内置的插件
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const webpack = require('webpack');
 const path = require('path');
+
+const NODE_ENV = process.env.NODE_ENV;
+const PUBLIC_PATH = process.env.NODE_ENV === 'production' ? './' : '/';
+
+const minify = NODE_ENV === 'production' ? {
+    removeComments: true,
+    collapseWhitespace: true,
+    removeAttributeQuotes: true
+} : false;
+
+let plugins = [
+    new CleanWebpackPlugin(['dist']),
+    new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify(NODE_ENV),
+            'PUBLIC_PATH': JSON.stringify(PUBLIC_PATH)
+        }
+    }),
+    // -------------- HtmlWebpackPlugin
+    new HtmlWebpackPlugin({
+        filename: 'muma.html',
+        template: './src/demo-muma/index.html',
+        chunks: ['muma'],
+        minify: minify
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'zhengfangti.html',
+        template: './src/demo-zhengfangti/index.html',
+        chunks: ['zhengfangti'],
+        minify: minify
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'zhengfangti-ani.html',
+        template: './src/demo-zhengfangti-ani/index.html',
+        chunks: ['zhengfangti-ani'],
+        minify: minify
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'img3d.html',
+        template: './src/demo-img3d/index.html',
+        chunks: ['img3d'],
+        minify: minify
+    })
+];
+
+NODE_ENV === 'production' ? plugins.push(new UglifyJSPlugin({
+    sourceMap: true
+})) : null;
+
+console.log(plugins);
+
 module.exports = {
     // context: path.resolve(__dirname, 'src'), //基本目录，一个绝对路径，用于从配置中解析入口点和装载器。
-    devtool: "inline-source-map",//生成 source map（源映射）.
+    devtool: 'source-map',
     entry: {
-        muma: './src/demo-muma/index.js',
-        zhengfangti: './src/demo-zhengfangti/index.js',
+        'muma': './src/demo-muma/index.js',
+        'zhengfangti': './src/demo-zhengfangti/index.js',
         'zhengfangti-ani': './src/demo-zhengfangti-ani/index.js',
-        img3d: './src/demo-img3d/index.js',
+        'img3d': './src/demo-img3d/index.js',
     },
     output: {
-        filename: '[name].bundle.js',//输出文件.
-        path: path.resolve(__dirname, 'dist'), //输出路径
-        // publicPath: '/'//HMR 知道在哪里加载，这是热更新模块所必需的
+        filename: 'scripts/[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: PUBLIC_PATH
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ['css-loader', 'postcss-loader']//?modules
-                })
+                use: ["style-loader", "css-loader", {
+                        loader: "postcss-loader",
+                        options: {
+                            config: {
+                                path: 'postcss.config.js',
+                                ctx: {
+                                    autoprefixer: {browsers: ['> 1%']}
+                                }
+                            }
+                        }
+                    }]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
                 loader: 'file-loader',
                 query: {
-                    name: '[name].[ext]?[hash]',
-                    publicPath: './images/'
+                    name: 'images/[name].[ext]',
+                    publicPath: PUBLIC_PATH
                 }
-            },
-            // {
-            //     test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-            //     loader: 'file-loader'
-            // }
+            }
         ]
     },
-    plugins: [
-        // new HtmlWebpackPlugin({template: './src/demo-muma/index.html'}),
-        new ExtractTextPlugin('[name].styles.css')
-    ],
+    plugins: plugins,
     devServer: {
-        compress: true,//如果要对资产启用 gzip 压缩，请设置此值
-        // contentBase: path.join(__dirname, "dist"), //匹配输出路径，也可以是一个数组，或者 contentBase: "http://localhost/
-        // publicPath: '/', //捆绑的文件将在此路径下的浏览器中可用
-        headers: {
-            "X-Custom-Foo": "bar"
-        },
+        compress: true,
+        contentBase: path.join(__dirname, "dist"),
+        publicPath: PUBLIC_PATH,
         inline: true,
         host: "192.168.0.12",
         port: 9000
