@@ -2,6 +2,5 @@
 .idea/
 .project
 node_modules/
-dest/
-build/
+dist/
 ##############################
