@@ -66,6 +66,12 @@ let plugins = [
         template: './src/input-demo/index.html',
         chunks: ['input-demo'],
         minify: minify
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'mobile-swiper-demo.html',
+        template: './src/mobile-swiper-demo/index.html',
+        chunks: ['mobile-swiper-demo'],
+        minify: minify
     })
 ];
 
@@ -83,6 +89,7 @@ module.exports = {
         'css3-3d-demo': './src/css3-3d-demo/index.js',
         'baidu-reg-demo': './src/baidu-reg-demo/index.js',
         'input-demo': './src/input-demo/index.js',
+        'mobile-swiper-demo': './src/mobile-swiper-demo/index.js'
     },
     output: {
         filename: 'scripts/[name].bundle.js',
