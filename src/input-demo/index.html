@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="renderer" content="webkit">
+		<title>输入框</title>
+		<!--[if IE 8]>
+			<style type="text/css">
+				.srk .ul-01 .item .trigger .del{top: 4px !important;}
+				.srk .secl-panel{border:1px solid #87CEFA;box-sizing:content-box;bottom:-404px;right:-1px;}
+			</style>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="srk" role="srk">
+			<ul class="ul-01 cfx">
+				<li class="item float-r">
+					<a class="select-trigger secl-catagray" href="javascript:void(0);">
+						<span class="glyphicon glyphicon-user" style="top: 3px;left: 2px;"></span>
+					</a>
+					<a class="select-trigger clear-all-secl" href="javascript:void(0);">
+						<span class="glyphicon glyphicon-trash" style="top: 3px;left: -1px;"></span>
+					</a>
+				</li>
+				<li class="item tip ul-01-tip">
+					请选择人员
+				</li>
+				<!--<li class="item checked">
+					<a class="trigger" href="javascript:void(0);">
+						<span class="move">
+							<i class="icon glyphicon glyphicon-user"></i>
+							<strong class="name">涂小花</strong>
+						</span>
+						<span class="del">&times;</span>
+					</a>
+				</li>-->
+				
+				<li class="item ipt-box">
+					<input class="ul-01-ipt" style="width: 90px;background-color: #FFFFFF;" type="text"/>
+				</li>
+			</ul>
+			<ul class="ul-02" style="display: none;">
+				<!--<li class="item tip">请输入同事名字的拼音</li>-->
+				<!--<li class="item tit"><span class="glyphicon glyphicon-user"></span><strong>人员</strong></li>-->
+				<!--<li class="item unchecked"><a class="trigger" href="javascript:void(0);">涂小花</a></li>-->
+			</ul>
+			<div class="secl-panel" style="display: none;">
+				<ul class="big-catagray">
+					<li class="col-3">
+						<a class="item active" data-catagray="bm" href="javascript:void(0);">
+							<span class="glyphicon glyphicon-user icon"></span><br>
+							<span class="name">按部门</span>
+						</a>
+					</li>
+					<li class="col-3">
+						<a class="item devide" data-catagray="gw" href="javascript:void(0);">
+							<span class="glyphicon glyphicon-briefcase icon"></span><br>
+							<span class="name">按岗位</span>
+						</a>
+					</li>
+					<li class="col-3">
+						<a class="item" data-catagray="link" href="javascript:void(0);">
+							<span class="glyphicon glyphicon-comment icon"></span><br>
+							<span class="name">常用联系人</span>
+						</a>
+					</li>
+				</ul>
+				<ul class="list">
+					<li class="tit">
+						<a href="javascript:void(0);" class="trigger">
+							选择全部
+							<div class="checkbox-box">
+								<div class="states"></div>
+							</div>
+						</a>
+					</li>
+
+					<li class="item">
+						<label class="trigger">
+							<div class="checkbox-box">
+								<input type="checkbox" value=""/>
+								<div class="states"></div>
+							</div>
+							<div class="img-box">
+								
+							</div>
+							<div class="name">涂小花</div>
+						</label>
+					</li>
+					<li class="item">
+						<label class="trigger">
+							<div class="checkbox-box">
+								<input type="checkbox" value=""/>
+								<div class="states"></div>
+							</div>
+							<div class="img-box">
+								
+							</div>
+							<div class="name">涂小花</div>
+						</label>
+					</li>
+				</ul>
+				<ul class="catagray">
+					<li class="tit">
+						<span class="glyphicon glyphicon-folder-open icon"></span>
+						<a href="javascript:void(0);" class="name">部门</a>
+					</li>
+					<li class="item">
+						<span class="glyphicon glyphicon-list-alt icon"></span>
+						<a href="javascript:void(0);" class="name active">游戏部门</a>
+					</li>
+					<li class="item">
+						<span class="glyphicon glyphicon-list-alt icon"></span>
+						<a href="javascript:void(0);" class="name">游戏部门</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
@@ -31,6 +32,11 @@ let plugins = [
         chunks: ['muma'],
         minify: minify
     }),
+    new ExtractTextPlugin({
+        filename: 'styles/[name].css',
+        allChunks: false
+    }),
+    // ------------------------
     new HtmlWebpackPlugin({
         filename: 'zhengfangti.html',
         template: './src/demo-zhengfangti/index.html',
@@ -44,15 +50,21 @@ let plugins = [
         minify: minify
     }),
     new HtmlWebpackPlugin({
-        filename: 'img3d.html',
-        template: './src/demo-img3d/index.html',
-        chunks: ['img3d'],
+        filename: 'css3-3d-demo.html',
+        template: './src/css3-3d-demo/index.html',
+        chunks: ['css3-3d-demo'],
         minify: minify
     }),
     new HtmlWebpackPlugin({
         filename: 'baidu-reg-demo.html',
         template: './src/baidu-reg-demo/index.html',
         chunks: ['baidu-reg-demo'],
+        minify: minify
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'input-demo.html',
+        template: './src/input-demo/index.html',
+        chunks: ['input-demo'],
         minify: minify
     })
 ];
@@ -68,8 +80,9 @@ module.exports = {
         'muma': './src/demo-muma/index.js',
         'zhengfangti': './src/demo-zhengfangti/index.js',
         'zhengfangti-ani': './src/demo-zhengfangti-ani/index.js',
-        'img3d': './src/demo-img3d/index.js',
+        'css3-3d-demo': './src/css3-3d-demo/index.js',
         'baidu-reg-demo': './src/baidu-reg-demo/index.js',
+        'input-demo': './src/input-demo/index.js',
     },
     output: {
         filename: 'scripts/[name].bundle.js',
@@ -80,7 +93,10 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader", {
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    publicPath: '../',
+                    use: ["css-loader", {
                         loader: "postcss-loader",
                         options: {
                             config: {
@@ -91,6 +107,7 @@ module.exports = {
                             }
                         }
                     }]
+                })
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
@@ -127,6 +144,16 @@ module.exports = {
                     }
                 ]
             },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'assets/fonts/[name].[hash:8].[ext]',
+                    publicPath: '../',
+                    // 会覆盖css里面的字体的对外路径，所以不设置
+                    // 或者和css里字体的对外路径设置成一样
+                }
+            }
         ]
     },
     plugins: plugins,
