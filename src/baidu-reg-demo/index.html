@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+	    <meta charset="UTF-8">
+	    <title>仿百度注册</title>
+	</head>
+	<body>
+		<div class="reg">
+			<form action="http://www.baidu.com" method="get">
+				<dl>
+					<dt>手机/邮箱</dt>
+					<dd class="ipt_box">
+						<input id="telEmail" name="telemail" type="text" placeholder="手机/邮箱" />
+						<span class="clear"></span>
+					</dd>
+					<dd class="mes">
+						<div class="tip">请输入中国大陆手机号码或常用邮箱，可用于登陆和找回密码</div>
+						<div class="error">
+							<span class="error_icon"></span>
+							<span>请填写正确的手机号码/邮箱</span>
+						</div>
+					</dd>
+				</dl>
+				<dl>
+				<dt>密码</dt>
+					<dd class="ipt_box">
+						<input id="pswd" name="pswd" type="password" placeholder="密码" />
+						<span class="clear"></span>
+					</dd>
+					<dd class="mes">
+						<div class="error"><span class="error_icon"></span><span>请输入密码</span></div>
+						<ul>
+							<li>
+								<span class="pwd_icon">○</span>
+								<span>长度为6~14个字符</span>
+							</li>
+							<li>
+								<span class="pwd_icon">○</span>
+								<span>支持数字、大小写字母和标点符号</span>
+							</li>
+							<li>
+								<span class="pwd_icon">○</span>
+								<span>不允许有空格</span>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt>验证码</dt>
+					<dd class="ipt_box">
+						<input id="yzm" name="yzm" type="text" placeholder="验证码" style="width:120px;" autocomplete="off" />
+						<span class="clear"></span>
+					</dd>
+					<dd class="yzm_box">
+						<img src="./yzm.png" />
+					</dd>
+					<dd class="change_another">
+						<a href="javascript:void(0);">换一张</a>
+					</dd>
+
+					<dd class="mes">
+						<div class="error">
+							<span class="error_icon"></span>
+							<span>请输入验证码</span>
+						</div>
+						<div class="tip" style="line-height:34px;text-indent:15px;">
+							请输入图片中的字符，不区分大小写
+						</div>
+					</dd>
+				</dl>
+				<dl style="height:40px;overflow:hidden;">
+					<dt></dt>
+					<dd class="ipt_box protocol">
+						<input id="agree" type="checkbox" checked />
+						<span>
+							<label for="agree">我已阅读并接受</label>
+							<a href="#">《XXXX用户协议》</a>
+						</span>
+					</dd>
+				</dl>
+				<dl>
+					<dt></dt>
+					<dd class="ipt_box">
+						<input class="regBtn" type="button" value="注册" />
+					</dd>
+					<dd class="mes">
+						<div class="error">
+							<span class="error_icon"></span>
+							<span>你还未同意协议</span>
+						</div>
+					</dd>
+				</dl>
+			</form>
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

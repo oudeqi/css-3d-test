@@ -21,7 +21,10 @@ let plugins = [
             'PUBLIC_PATH': JSON.stringify(PUBLIC_PATH)
         }
     }),
-    // -------------- HtmlWebpackPlugin
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery'
+    }),
     new HtmlWebpackPlugin({
         filename: 'muma.html',
         template: './src/demo-muma/index.html',
@@ -45,6 +48,12 @@ let plugins = [
         template: './src/demo-img3d/index.html',
         chunks: ['img3d'],
         minify: minify
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'baidu-reg-demo.html',
+        template: './src/baidu-reg-demo/index.html',
+        chunks: ['baidu-reg-demo'],
+        minify: minify
     })
 ];
 
@@ -60,6 +69,7 @@ module.exports = {
         'zhengfangti': './src/demo-zhengfangti/index.js',
         'zhengfangti-ani': './src/demo-zhengfangti-ani/index.js',
         'img3d': './src/demo-img3d/index.js',
+        'baidu-reg-demo': './src/baidu-reg-demo/index.js',
     },
     output: {
         filename: 'scripts/[name].bundle.js',
@@ -93,14 +103,37 @@ module.exports = {
                     // 会影响 html里面 img标签的src属性
                     // 会覆盖 output配置里的 publicPath
                 }
-            }
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: "html-withimg-loader",
+                        options: {
+                            // exclude: /image/,//排除image目录
+                            min: false,//默认会去除html中的换行符，配置min=false可不去除
+                            deep: false,//将关闭include语法嵌套子页面的功能
+                        }
+                    },
+                    {
+                        loader: "html-loader",
+                        options: {
+                            attrs: ['img:data-src'],
+                            interpolate: true,//为 ES6 模板字符串启用插值语法
+                            minimize: false,
+                            removeComments: false,
+                            collapseWhitespace: false
+                        }
+                    }
+                ]
+            },
         ]
     },
     plugins: plugins,
     devServer: {
         compress: true,
         contentBase: path.join(__dirname, "dist"),
-        publicPath: PUBLIC_PATH,
+        publicPath: '/',
         inline: true,
         host: "192.168.0.12",
         port: 9000
